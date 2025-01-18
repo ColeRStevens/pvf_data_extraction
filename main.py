@@ -24,15 +24,17 @@ def main():
         else:
             rows.append([el.text.strip() for el in row.find_all('td')])
 
-    headers.insert(2,"H/A")
+    headers.insert(2,"Location")
 
-    value = rows[0][1][:2]
-    value2 = rows[1][1][:2]
-    print(value,"   ", value2)
-    rows[0].insert(2, value)
-    rows[1].insert(2, value2)
-    rows[0][1] = rows[0][1][2:]
-    rows[1][1] = rows[1][1][2:]
+    
+    for row in rows:
+        value = row[1][:2]
+        if value == "vs":
+            row.insert(2, "Home")
+        elif value == "at":
+            row.insert(2, "Away")
+
+        rows[rows.index(row)][1] = rows[rows.index(row)][1][2:]
     
     df = pd.DataFrame(rows, columns=headers)
     print(df)
