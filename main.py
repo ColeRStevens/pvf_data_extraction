@@ -12,8 +12,8 @@ teams = ["https://provolleyball.com/teams/indy-ignite/statistics?tab=matchByMatc
         "https://provolleyball.com/teams/grand-rapids-rise/statistics?tab=matchByMatch",
         "https://provolleyball.com/teams/orlando-valkyries/statistics?tab=matchByMatch",
         "https://provolleyball.com/teams/san-diego-mojo/statistics?tab=matchByMatch",
-        "https://provolleyball.com/teams/vegas-thrill/statistics?tab=matchByMatch"
-        ]
+        "https://provolleyball.com/teams/vegas-thrill/statistics?tab=matchByMatch"]
+
 def extract_data(url):
 
     # xpaths for various elements
@@ -69,6 +69,8 @@ def extract_data(url):
 
         headers.insert(2,"Location")
         headers.insert(1,"Team")
+        
+        driver.close()
 
         return rows,headers
         
@@ -97,6 +99,17 @@ def extract_data(url):
 
     return rows,headers
 
+def sort_data(index,rows):
+    """
+    sort the data based on the input (date, team, location, etc...)
+    0 = date, 1 = team,2 = opponent 3 = location, 4 = W/L, 5 = kills, 6 = assists,
+    7 = SA, 8 = Blocks, 9 = Outs, 10 = Errors, 11 = AVG/S, 12 = Efficiency %, 13 = Digs, 14 = SP
+    """
+    
+    sorted_data = sorted(rows, key=lambda x: x[index])
+
+    return sorted_data
+    
 def main():
     team_rows = []
     header = []
@@ -106,6 +119,9 @@ def main():
         if header == []:
             header = headers
         team_rows.extend(rows)
+
+    # See sort_data function
+    team_rows = sort_data(0,team_rows)
 
     df = pd.DataFrame(team_rows, columns=headers)
     print(df)
