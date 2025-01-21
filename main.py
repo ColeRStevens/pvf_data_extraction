@@ -16,6 +16,7 @@ teams = ["https://provolleyball.com/teams/indy-ignite/statistics?tab=matchByMatc
         ]
 def extract_data(url):
 
+    # xpaths for various elements
     xpath_table = '//*[@id="app"]/main/div/div[2]/div/div[2]/div/div/div/table'
     xpath_2024_click = '//*[@id="app"]/main/div/div[2]/div/div[1]/div/select/option[1]'
     xpath_year_switch= '//*[@id="app"]/main/div/div[2]/div/div[1]/div'
@@ -26,7 +27,7 @@ def extract_data(url):
     driver = webdriver.Firefox()
     driver.get(url)
     
-   
+   # wait for the table to load
     element = WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((By.XPATH, xpath_table)))
     html_element = element.get_attribute('innerHTML')
@@ -36,6 +37,7 @@ def extract_data(url):
     headers = []
     rows = []
 
+    # extract the data
     for i, row in enumerate(soup.find_all('tr')):
         if i == 0:
             headers = [el.text.strip() for el in row.find_all('th')]
@@ -45,7 +47,7 @@ def extract_data(url):
     driver.find_element(By.XPATH,xpath_year_switch).click()
     driver.find_element(By.XPATH,xpath_2024_click).click()
     
-    
+    # wait for the table to load
     try:
         element = WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((By.XPATH, xpath_table)))
@@ -67,16 +69,16 @@ def extract_data(url):
 
         headers.insert(2,"Location")
         headers.insert(1,"Team")
-        
+
         return rows,headers
         
-        
+    # extract the data
     for i, row in enumerate(soup.find_all('tr')):
             if i == 0:
                 headers = [el.text.strip() for el in row.find_all('th')]
             else:
                 rows.append([el.text.strip() for el in row.find_all('td')])
-
+    # clean up the data
     for row in rows:
             value = row[1][:2]
             if value == "vs":
