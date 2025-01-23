@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import pandas as pd
 from bs4 import BeautifulSoup
+import os
 
 teams = ["https://provolleyball.com/teams/indy-ignite/statistics?tab=matchByMatch",
          "https://provolleyball.com/teams/atlanta-vibe/statistics?tab=matchByMatch",
@@ -125,7 +126,11 @@ def main():
 
     df = pd.DataFrame(team_rows, columns=headers)
     print(df)
-    df.to_csv('data/data.csv', index=False)
+
+    if not os.path.exists("./data"):
+        os.makedirs("./data")
+    
+    df.to_csv(f"./data/data.csv",index=False)
 
 if __name__ == "__main__":
     main()
