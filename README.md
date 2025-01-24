@@ -36,4 +36,4 @@ The program can sort the data according to the columns. Check the comments on [s
 
 ### Lessons Learned
 
-This project taught me how to use powerful data extraction and automation libraries such as selenium,pandas and BeautifulSoup4. I had to learn how to get around dynamic tables, which is why I use selenium instead of [requests](https://requests.readthedocs.io/en/latest/user/install/) or BeautifulSoup. Not only did I learn valuable skills, I got to use them on data that relates to something I support.
+This project taught me how to use powerful data extraction and automation libraries such as selenium, pandas and BeautifulSoup4. I had to learn how to get around dynamic tables, which is why I use selenium instead of [requests](https://requests.readthedocs.io/en/latest/user/install/) or BeautifulSoup. Not only did I learn valuable skills, I got to use them on data that relates to something I support.
