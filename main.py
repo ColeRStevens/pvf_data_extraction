@@ -2,9 +2,10 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 import pandas as pd
 from bs4 import BeautifulSoup
-import os
+import os,sys
 
 teams = ["https://provolleyball.com/teams/indy-ignite/statistics?tab=matchByMatch",
          "https://provolleyball.com/teams/atlanta-vibe/statistics?tab=matchByMatch",
@@ -25,7 +26,10 @@ def extract_data(url):
     name = url[32:].split('/')[0].replace('-', ' ')
     name = name.title()
 
-    driver = webdriver.Firefox()
+    co = Options()
+    co.add_argument("--headless")
+    driver = webdriver.Chrome(options=co)
+
     driver.get(url)
     
    # wait for the table to load
@@ -100,18 +104,17 @@ def extract_data(url):
 
     return rows,headers
 
-def sort_data(index,rows):
-    """
-    sort the data based on the input (date, team, location, etc...)
-    0 = date, 1 = team,2 = opponent 3 = location, 4 = W/L, 5 = kills, 6 = assists,
-    7 = SA, 8 = Blocks, 9 = Outs, 10 = Errors, 11 = AVG/S, 12 = Efficiency %, 13 = Digs, 14 = SP
-    """
-    
-    sorted_data = sorted(rows, key=lambda x: x[index])
+def sort_data(i,rows):
 
-    return sorted_data
+    return sorted(rows, key=lambda x: x[int(i)])
     
 def main():
+
+    index = sys.argv[1];
+    if index == None:
+        index = 0
+    print("The index is : " + index)
+
     team_rows = []
     header = []
 
@@ -122,7 +125,7 @@ def main():
         team_rows.extend(rows)
 
     # See sort_data function
-    team_rows = sort_data(0,team_rows)
+    team_rows = sort_data(index,team_rows)
 
     df = pd.DataFrame(team_rows, columns=headers)
     print(df)

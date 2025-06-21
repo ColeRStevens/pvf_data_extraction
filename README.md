@@ -1,6 +1,6 @@
 # PVF Volleyball Extraction
 
-This program uses the [selenium](https://selenium-python.readthedocs.io/installation.html), [pandas](https://pandas.pydata.org/docs/getting_started/install.html), and [BeautifulSoup](https://beautiful-soup-4.readthedocs.io/en/latest/#installing-beautiful-soup) python libraries to extract the html and data from the Omaha Supernovas and other teams from the [Pro Volleyball Federation](https://provolleyball.com/) team websites.
+This python script uses the [selenium](https://selenium-python.readthedocs.io/installation.html), [pandas](https://pandas.pydata.org/docs/getting_started/install.html), and [BeautifulSoup](https://beautiful-soup-4.readthedocs.io/en/latest/#installing-beautiful-soup) python libraries to extract the html and data from the Omaha Supernovas and other teams from the [Pro Volleyball Federation](https://provolleyball.com/) team websites.
 
 ### Installation and Usage
 
@@ -22,17 +22,25 @@ Then clone the repo with the following ...
 git clone "https://github.com/ColeRStevens/pvf_data_extraction/"
 ```
 
-Finally run this last command ...
+Now, decide on how you want to sort the data in the csv
 
 ```
-python main.py
+0 = date, 1 = team, 2 = opponent 3 = location, 4 = W/L, 5 = kills,
+6 = assists, 7 = SA, 8 = Blocks, 9 = Outs, 10 = Errors,
+11 = AVG/S, 12 = Efficiency %, 13 = Digs, 14 = SP
+```
+
+Once you have chosen how you want to sort it, run the following command
+
+```
+python main.py <input>
 ```
 
 All that's left is to check your data.csv file in the ./data folder!
 
 ### Sorting
 
-The program can sort the data according to the columns. Check the comments on [sort_data()](https://github.com/ColeRStevens/pvf_data_extraction/blob/main/main.py#L102) for details.
+The program can sort the data according to the columns. Check the values above for more details
 
 ### Lessons Learned
 
