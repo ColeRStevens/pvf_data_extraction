@@ -11,5 +11,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: InstallPy
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.5"
+      - name: PipInstall
+        run: pip install -r requirements.txt
       - name: Run
         run: python main.py 0
