@@ -1,0 +1,13 @@
+
+name: Run Code Daily
+
+on: schedule:
+  - cron: '0 0 * * *'
+  workflow_dispatch:
+
+job:
+  run-code:
+    runs-on: windows-latest
+    steps:
+      - name: Run
+        run: python main.py 0
